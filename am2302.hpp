@@ -7,7 +7,7 @@ namespace oscarIO {
             struct packet {
                 unsigned int temp;
                 bool tempSign;
-                u_int8_t rh;
+                unsigned int rh;
             };
             template<std::size_t N>
             void reverse(std::bitset<N> &b) {
@@ -40,8 +40,11 @@ namespace oscarIO {
             sensor.write(false);
             hwlib::wait_ms(1);
             sensor.write(true); // Host pull up
-            hwlib::wait_us(30);
+            hwlib::wait_us(40);
             sensor.direction_set_input();
+            hwlib::wait_us(40);
+            waitTillState(true);
+            waitTillState(false);
             waitTillState(true);
             waitTillState(false);
             for (int i = 0; i < 40; i++) {
